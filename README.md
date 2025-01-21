@@ -44,25 +44,30 @@ git clone https://github.com/your-repo/currency-converter.git
 cd currency-converter
 ```
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies (Frontend & Backend)
 
 ```sh
-npm install
+npm run install:all
 ```
 
-### 3️⃣ Start the Backend
+### 3️⃣ Start the Application (Runs Both Frontend & Backend)
 
 ```sh
-cd backend
-npm install
 npm run dev
 ```
 
-### 4️⃣ Start the Frontend
+### 📌 Run Separately If Needed
+
+#### Start Only the Backend
 
 ```sh
-cd frontend
-npm run dev
+npm run dev:backend
+```
+
+#### Start Only the Frontend
+
+```sh
+npm run dev:frontend
 ```
 
 ---

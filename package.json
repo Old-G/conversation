@@ -1,8 +1,10 @@
 {
 	"name": "currency-converter",
 	"scripts": {
-		"install:all": "npm install --prefix server && npm install --prefix frontend",
-		"start": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix frontend\""
+		"install:all": "npm install && cd server && npm install && cd ../frontend && npm install",
+		"dev": "concurrently \"cd server && npm run dev\" \"cd frontend && npm run dev\"",
+		"dev:backend": "cd server && npm run dev",
+		"dev:frontend": "cd frontend && npm run dev"
 	},
 	"devDependencies": {
 		"concurrently": "^7.6.0"
