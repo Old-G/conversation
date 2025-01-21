@@ -21,7 +21,9 @@ Built with **React, Zustand, Zod, React Hook Form, TanStack Query**, and **Node.
 ✅ **Conversion history storage**  
 ✅ **Redis caching for performance optimization**  
 ✅ **RESTful API with Express.js**  
-✅ **Error handling & validation**
+✅ **Error handling & validation**  
+✅ **User-friendly UI with Tailwind CSS**  
+✅ **Optimized API requests for reduced latency**
 
 ---
 
@@ -140,16 +142,17 @@ GET /api/conversion-history
 - **Redis caching** is used for optimized responses
 - **Conversion history** stores the last 10 conversions
 - **Error handling** ensures API stability
+- **Optimized API calls** to reduce rate limits
 
 ---
 
 ## ✨ Future Improvements
 
-✅ Add **WebSocket real-time updates**  
 ✅ Support **more cryptocurrencies**  
 ✅ Improve **UI & animations**  
 ✅ Implement **multi-language support**  
-✅ Add **Dark Mode theme**
+✅ Add **Dark Mode theme**  
+✅ Expand **conversion history storage options**
 
 ---
 
@@ -165,4 +168,4 @@ GET /api/conversion-history
 
 ## 📜 License
 
-MIT License © 2025 Your Name
+MIT License © 2025 Gleb Zavalov
