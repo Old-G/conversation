@@ -8,6 +8,7 @@ Built with **React, Zustand, Zod, React Hook Form, TanStack Query**, and **Node.
 ## 🎥 Demo
 
 ![Demo GIF](./screenshots/demo.gif)
+![App Screenshot](./frontend/src/assets/app.png)
 
 ---
 
