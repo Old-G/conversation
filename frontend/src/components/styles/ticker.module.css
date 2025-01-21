@@ -1,0 +1,24 @@
+.ticker_container {
+  width: 100%;
+  overflow: hidden;
+  background: #757474;
+  color: #fff;
+  padding: 5px 0;
+  white-space: nowrap;
+  position: relative;
+}
+
+.ticker_content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker-scroll 300s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
