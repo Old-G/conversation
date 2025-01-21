@@ -5,68 +5,164 @@ Built with **React, Zustand, Zod, React Hook Form, TanStack Query**, and **Node.
 
 ---
 
-## 🎥 Demo  
-![Demo GIF](./screenshots/demo.gif)  
+## 🎥 Demo
+
+![Demo GIF](./screenshots/demo.gif)
 
 ---
 
-## 📌 Features  
+## 📌 Features
+
 ✅ **Supports Fiat & Crypto conversions**  
 ✅ **Real-time exchange rates** (via CoinGecko API)  
 ✅ **Zod-based form validation**  
 ✅ **State management with Zustand**  
 ✅ **React Hook Form for smooth form handling**  
 ✅ **Conversion history storage**  
+✅ **Redis caching for performance optimization**  
+✅ **RESTful API with Express.js**  
+✅ **Error handling & validation**
 
 ---
 
-## 🛠️ Tech Stack  
-- **Frontend:** React, TypeScript, Zustand, React Hook Form, Tailwind CSS  
-- **Backend:** Node.js, Express, Redis caching  
-- **API:** CoinGecko  
+## 🛠️ Tech Stack
+
+- **Frontend:** React, TypeScript, Zustand, React Hook Form, Tailwind CSS, Vite
+- **Backend:** Node.js, Express, Redis caching
+- **API:** CoinGecko, ExchangeRate-API
 
 ---
 
-## 🚀 Setup & Run  
+## 🚀 Setup & Run
 
-### 1️⃣ Clone the Repository  
+### 1️⃣ Clone the Repository
+
 ```sh
 git clone https://github.com/your-repo/currency-converter.git
 cd currency-converter
+```
 
 ### 2️⃣ Install Dependencies
+
 ```sh
 npm install
+```
 
 ### 3️⃣ Start the Backend
+
 ```sh
 cd backend
 npm install
 npm run dev
+```
 
 ### 4️⃣ Start the Frontend
+
 ```sh
 cd frontend
 npm run dev
-
-
-# 💱 Crypto & Fiat Currency Converter
-
-A **React-based** currency converter that supports both **fiat** and **crypto** exchanges. 🚀  
-Built with **React, Zustand, Zod, React Hook Form, TanStack Query**, and **Node.js backend** for real-time exchange rate fetching.
+```
 
 ---
 
-## 🎯 Usage  
+## 🎯 Usage
+
 1️⃣ **Select Fiat or Crypto mode**  
 2️⃣ **Enter the amount and choose currencies**  
 3️⃣ **Click Convert**  
-4️⃣ **View exchange rate & conversion history**  
+4️⃣ **View exchange rate & conversion history**
 
 ---
 
-## 🖥️ API Endpoints  
+## 🖥️ API Endpoints
 
-### ✅ Convert Fiat Currency  
+### ✅ Convert Fiat Currency
+
 ```http
 POST /api/convert-fiat
+```
+
+#### Request Body:
+
+```json
+{
+	"fromCurrency": "USD",
+	"toCurrency": "EUR",
+	"amount": 100
+}
+```
+
+#### Response:
+
+```json
+{
+	"exchangeRate": 0.96,
+	"convertedAmount": "96.0"
+}
+```
+
+### ✅ Convert Crypto Currency
+
+```http
+POST /api/convert-crypto
+```
+
+#### Request Body:
+
+```json
+{
+	"fromCurrency": "BTC",
+	"toCurrency": "ETH",
+	"amount": 1
+}
+```
+
+#### Response:
+
+```json
+{
+	"exchangeRate": 31.97,
+	"convertedAmount": "31.97"
+}
+```
+
+### ✅ Fetch Conversion History
+
+```http
+GET /api/conversion-history
+```
+
+---
+
+## 📝 Notes
+
+- Exchange rates are fetched from **CoinGecko API** & **ExchangeRate-API**
+- **Redis caching** is used for optimized responses
+- **Conversion history** stores the last 10 conversions
+- **Error handling** ensures API stability
+
+---
+
+## ✨ Future Improvements
+
+✅ Add **WebSocket real-time updates**  
+✅ Support **more cryptocurrencies**  
+✅ Improve **UI & animations**  
+✅ Implement **multi-language support**  
+✅ Add **Dark Mode theme**
+
+---
+
+## 🤝 Contributing
+
+1️⃣ **Fork** the repo  
+2️⃣ **Create a branch** (`git checkout -b feature-name`)  
+3️⃣ **Commit changes** (`git commit -m "Added new feature"`)  
+4️⃣ **Push to branch** (`git push origin feature-name`)  
+5️⃣ **Create a Pull Request**
+
+---
+
+## 📜 License
+
+MIT License © 2025 Your Name
