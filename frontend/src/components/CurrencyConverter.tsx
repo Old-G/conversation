@@ -10,7 +10,6 @@ import Loader from './Loader'
 import MarqueeTicker from './MarqueeTicker'
 import { Button } from './ui/button'
 
-// 📌 Определяем схему валидации с Zod
 const schema = z.object({
 	amount: z
 		.string()
@@ -37,7 +36,6 @@ const CurrencyConverter: React.FC = () => {
 		addToHistory,
 	} = useCurrencyStore()
 
-	// Состояния для результата запроса
 	const [data, setData] = useState<null | {
 		convertedAmount: string
 		exchangeRate: number
@@ -45,7 +43,6 @@ const CurrencyConverter: React.FC = () => {
 	const [isFetching, setIsFetching] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
-	// Инициализация useForm с валидацией через zod
 	const {
 		register,
 		handleSubmit,
@@ -56,12 +53,11 @@ const CurrencyConverter: React.FC = () => {
 		resolver: zodResolver(schema),
 		defaultValues: {
 			amount: '',
-			fromCurrency: fromCurrency, // ✅ теперь берем из store
-			toCurrency: toCurrency, // ✅ теперь берем из store
+			fromCurrency: fromCurrency,
+			toCurrency: toCurrency,
 		},
 	})
 
-	// Загружаем валюты при изменении режима (Фиат/Крипто)
 	useEffect(() => {
 		if (currencyList.length === 0) {
 			loadCurrencies()
@@ -70,12 +66,11 @@ const CurrencyConverter: React.FC = () => {
 		const newFromCurrency = isCrypto ? 'BTC' : 'USD'
 		const newToCurrency = isCrypto ? 'ETH' : 'EUR'
 
-		console.log(`🔄 Обновляем валюты: ${newFromCurrency} → ${newToCurrency}`)
+		console.log(`🔄 Update currencies: ${newFromCurrency} → ${newToCurrency}`)
 
 		setFromCurrency(newFromCurrency)
 		setToCurrency(newToCurrency)
 
-		// 💡 Обновляем значения в react-hook-form
 		setValue('fromCurrency', newFromCurrency)
 		setValue('toCurrency', newToCurrency)
 	}, [
@@ -87,11 +82,10 @@ const CurrencyConverter: React.FC = () => {
 		setValue,
 	])
 
-	// ✅ Теперь вызываем fetchExchangeRate напрямую в onSubmit
 	const fetchRate = async (formData: FormData) => {
 		try {
 			setIsFetching(true)
-			setError(null) // Сбрасываем ошибку перед новым запросом
+			setError(null)
 
 			const response = await fetchExchangeRate(
 				formData.fromCurrency,
@@ -100,9 +94,8 @@ const CurrencyConverter: React.FC = () => {
 				isCrypto
 			)
 
-			setData(response) // Сохраняем данные в состояние
+			setData(response)
 
-			// Добавляем в историю
 			addToHistory({
 				timestamp: new Date().toLocaleString(),
 				from: formData.fromCurrency,
@@ -112,7 +105,6 @@ const CurrencyConverter: React.FC = () => {
 				convertedAmount: response.convertedAmount,
 			})
 
-			// Очищаем поле суммы после конверсии
 			reset({ amount: '' })
 		} catch (err) {
 			setError('Error fetching exchange rate.')
@@ -128,11 +120,10 @@ const CurrencyConverter: React.FC = () => {
 		await fetchRate(formData)
 	}
 
-	// ✅ Фильтруем валюты (Фиат/Крипто)
 	const filteredCurrencyList = useMemo(() => {
 		return isCrypto
-			? currencyList.filter(c => ['BTC', 'ETH', 'LTC'].includes(c)) // Фильтруем крипту
-			: currencyList.filter(c => !['BTC', 'ETH', 'LTC'].includes(c)) // Фильтруем фиат
+			? currencyList.filter(c => ['BTC', 'ETH', 'LTC'].includes(c))
+			: currencyList.filter(c => !['BTC', 'ETH', 'LTC'].includes(c))
 	}, [isCrypto, currencyList])
 
 	return (
@@ -142,7 +133,6 @@ const CurrencyConverter: React.FC = () => {
 			<div className='max-w-sm w-full mx-auto p-6 bg-white text-black shadow-lg rounded-lg space-y-5'>
 				<h2 className='text-xl font-bold text-center'>Currency Converter</h2>
 
-				{/* Форма с react-hook-form */}
 				<form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
 					<div>
 						<label className='block'>Amount:</label>
@@ -181,7 +171,6 @@ const CurrencyConverter: React.FC = () => {
 								setFromCurrency(newFrom)
 								setToCurrency(newTo)
 
-								// 💡 Синхронизируем с react-hook-form
 								setValue('fromCurrency', newFrom)
 								setValue('toCurrency', newTo)
 							}}
@@ -218,13 +207,10 @@ const CurrencyConverter: React.FC = () => {
 					</div>
 				</form>
 
-				{/* 🔴 Показываем ошибки */}
 				{error && <p className='text-red-500 text-center mt-2'>{error}</p>}
 
-				{/* 🔄 Показываем Loader при загрузке */}
 				{isFetching && <Loader />}
 
-				{/* ✅ Показываем результат конверсии */}
 				{data && (
 					<p className='text-center text-lg mt-4 font-bold'>
 						Converted Amount: {data.convertedAmount} {toCurrency}
@@ -232,7 +218,6 @@ const CurrencyConverter: React.FC = () => {
 				)}
 			</div>
 
-			{/* История конверсий */}
 			<ConversationHistory />
 		</div>
 	)

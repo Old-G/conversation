@@ -1,0 +1,65 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.example
+
+# Editor files
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build files
+dist/
+build/
+.out/
+.next/
+.cache/
+.vercel/
+render/
+.tmp/
+
+# Backend specific
+backend/node_modules/
+backend/dist/
+backend/logs/
+backend/.env
+backend/.cache/
+
+# Frontend specific
+frontend/node_modules/
+frontend/dist/
+frontend/.next/
+frontend/.env
+frontend/.cache/
+
+# Redis data (if applicable)
+redis-data/
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log

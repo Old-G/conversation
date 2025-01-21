@@ -29,7 +29,7 @@ const getFiatRates = async (from: string, to: string): Promise<number> => {
 			throw new Error(`❌ Fiat exchange rate not found for ${from} to ${to}`)
 		}
 
-		await redis.set(cacheKey, rate.toString(), { EX: 3600 }) // Кэшируем на 1 час
+		await redis.set(cacheKey, rate.toString(), { EX: 3600 })
 		return rate
 	} catch (error) {
 		console.error('❌ Error fetching fiat rate:', error)
@@ -60,7 +60,7 @@ const getCryptoRates = async (from: string, to: string): Promise<number> => {
 			throw new Error(`❌ Crypto exchange rate not found for ${from} to ${to}`)
 		}
 
-		await redis.set(cacheKey, rate.toString(), { EX: 600 }) // Кэшируем на 10 минут
+		await redis.set(cacheKey, rate.toString(), { EX: 600 })
 		return rate
 	} catch (error) {
 		console.error('❌ Error fetching crypto rate:', error)
@@ -69,12 +69,10 @@ const getCryptoRates = async (from: string, to: string): Promise<number> => {
 }
 
 const getExchangeRate = async (from: string, to: string): Promise<number> => {
-	// Если обе валюты — фиатные, используем API фиатных курсов
 	if (!from.startsWith('crypto_') && !to.startsWith('crypto_')) {
 		return getFiatRates(from, to)
 	}
 
-	// Если хотя бы одна из валют — криптовалюта, используем API криптовалют
 	const fromSymbol = from.replace('crypto_', '').toLowerCase()
 	const toSymbol = to.replace('crypto_', '').toLowerCase()
 	return getCryptoRates(fromSymbol, toSymbol)
@@ -98,7 +96,7 @@ export const convertCurrency = async (
 		}
 
 		const exchangeRate = await getExchangeRate(fromCurrency, toCurrency)
-		const convertedAmount = (parseFloat(amount) * exchangeRate).toFixed(1) // ⬅ Округление до 1 знака
+		const convertedAmount = (parseFloat(amount) * exchangeRate).toFixed(1)
 
 		res.json({
 			fromCurrency,

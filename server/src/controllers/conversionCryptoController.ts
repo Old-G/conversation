@@ -1,18 +1,17 @@
 import axios from 'axios'
 import redis from '../config/redis'
 
-const conversionHistory: any[] = [] // Локальная история
+const conversionHistory: any[] = []
 
 const getCryptoExchangeRate = async (
 	from: string,
 	to: string
 ): Promise<number> => {
-	console.log('📌 Fetching crypto:', { from, to }) // ✅ ЛОГГИРУЕМ
+	console.log('📌 Fetching crypto:', { from, to })
 
 	const cacheKey = `cryptoRate:${from}-${to}`
 
 	try {
-		// Проверяем кэш
 		const cachedRate = await redis.get(cacheKey)
 		if (cachedRate) {
 			console.log('✅ Cache hit (crypto):', from, '->', to)
@@ -27,7 +26,6 @@ const getCryptoExchangeRate = async (
 			LTC: 'litecoin',
 		}
 
-		// Проверяем, есть ли такая крипта в нашем списке
 		const fromSymbol = cryptoMap[from.toUpperCase()]
 		const toSymbol = cryptoMap[to.toUpperCase()]
 
@@ -36,7 +34,6 @@ const getCryptoExchangeRate = async (
 			throw new Error(`Unsupported currency: ${from} or ${to}`)
 		}
 
-		// Запрашиваем курс к USD
 		const response = await axios.get(
 			'https://api.coingecko.com/api/v3/simple/price',
 			{
@@ -47,9 +44,8 @@ const getCryptoExchangeRate = async (
 			}
 		)
 
-		console.log('🔍 API Response:', JSON.stringify(response.data, null, 2)) // ✅ ЛОГГИРУЕМ ОТВЕТ API
+		console.log('🔍 API Response:', JSON.stringify(response.data, null, 2))
 
-		// Извлекаем курс к USD
 		const fromRate = response.data[fromSymbol]?.usd
 		const toRate = response.data[toSymbol]?.usd
 
@@ -58,10 +54,9 @@ const getCryptoExchangeRate = async (
 			throw new Error(`Crypto exchange rate not found for ${from} to ${to}`)
 		}
 
-		// Рассчитываем курс (например, BTC/ETH = BTC/USD ÷ ETH/USD)
 		const rate = fromRate / toRate
 
-		await redis.set(cacheKey, rate.toString(), { EX: 600 }) // 10 мин кеш
+		await redis.set(cacheKey, rate.toString(), { EX: 600 })
 		console.log(`✅ Converted rate: ${from} → ${to} = ${rate}`)
 		return rate
 	} catch (error) {
@@ -108,7 +103,6 @@ export const convertCryptoCurrency = async (req: any, res: any) => {
 	}
 }
 
-// 🚀 Эндпоинт для получения истории конверсий
 export const getConversionHistory = async (req: any, res: any) => {
 	res.json(conversionHistory)
 }

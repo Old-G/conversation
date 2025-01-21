@@ -44,15 +44,10 @@ export const useCurrencyStore = create<CurrencyState>()(
 			setCurrencyList: list => set({ currencyList: list }),
 
 			setIsCrypto: async isCrypto => {
-				console.log('🔄 Переключение режима:', isCrypto ? 'Крипто' : 'Фиат')
-
-				// Очистка валют перед загрузкой
 				set({ isCrypto, currencyList: [] })
 
-				// Ждем загрузки новых валют перед установкой дефолтных значений
 				await get().loadCurrencies()
 
-				// Устанавливаем валюты по умолчанию
 				if (isCrypto) {
 					set({ fromCurrency: 'BTC', toCurrency: 'ETH' })
 				} else {
@@ -60,22 +55,18 @@ export const useCurrencyStore = create<CurrencyState>()(
 				}
 			},
 			loadCurrencies: async () => {
-				if (get().currencyList.length > 0) return // Если уже загружено, не запрашиваем повторно
+				if (get().currencyList.length > 0) return
 
 				try {
-					console.log(
-						'🔄 Загружаем валюты, режим:',
-						get().isCrypto ? 'Крипто' : 'Фиат'
-					)
+					console.log('🔄 Load currencies:', get().isCrypto ? 'Crypto' : 'Fiat')
 
 					const currencies = get().isCrypto
 						? await getCryptoCurrencies()
 						: await getCurrencies()
 
 					set({ currencyList: Object.keys(currencies) })
-					console.log('✅ Загруженные валюты:', Object.keys(currencies))
 				} catch (error) {
-					console.error('❌ Ошибка загрузки валют', error)
+					console.error('❌ Error', error)
 				}
 			},
 			addToHistory: entry => {
